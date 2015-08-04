@@ -22,6 +22,8 @@ public abstract class StructLogPojo {
 	@Min(message = "Did not call Close() on the object.", value = 1)
 	protected long endTimestamp = 0;
 	@NotNull
+	private final List<Throwable> exceptionsCaught = new ArrayList<Throwable>();
+	@NotNull
 	private final List<StructLogPojo> dependentStructLog = new ArrayList<StructLogPojo>();
 	@NotNull
 	private final Map<String, String> attributes = new HashMap<String, String>();
@@ -48,6 +50,10 @@ public abstract class StructLogPojo {
 		return id;
 	}
 
+	public List<Throwable> getExceptionsCaught() {
+		return exceptionsCaught;
+	}
+
 	public List<StructLogPojo> getDependentStructLog() {
 		return dependentStructLog;
 	}
@@ -63,7 +69,6 @@ public abstract class StructLogPojo {
 	public long getEndTimestamp() {
 		return endTimestamp;
 	}
-
 	private static final int ID_LENGTH = 10;
 
 	abstract public void close();
