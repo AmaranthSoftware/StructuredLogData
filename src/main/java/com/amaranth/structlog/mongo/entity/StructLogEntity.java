@@ -7,7 +7,6 @@ public class StructLogEntity extends StructLog {
 
 	public StructLogEntity(String componentName) {
 		super(componentName);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
