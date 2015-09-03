@@ -4,9 +4,9 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 
 import com.amaranth.structlog.mongo.db.MongoDB;
-import com.amaranth.structlog.struct.StructLog;
+import com.amaranth.structlog.mongo.entity.StructLogEntity;
 
-public class StructLogDao extends BasicDAO<StructLog, String> {
+public class StructLogDao extends BasicDAO<StructLogEntity, String> {
 
 	protected StructLogDao(Datastore ds) {
 		super(ds);

@@ -2,6 +2,7 @@ package com.amaranth.structlog;
 
 import org.junit.Assert;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.amaranth.structlog.mongo.dao.StructLogDao;
@@ -34,7 +35,7 @@ public class TestStructLog
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
 		Assert.assertEquals(result.getComponentName(), componentName);
-		StructLogDao.getInstance().delete(result);
+		StructLogDao.getInstance().delete((StructLogEntity) result);
 	}
 
 	/**
@@ -51,6 +52,6 @@ public class TestStructLog
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
 		Assert.assertEquals(result.getComponentName(), componentName);
-		StructLogDao.getInstance().delete(result);
+		StructLogDao.getInstance().delete((StructLogEntity) result);
 	}
 }

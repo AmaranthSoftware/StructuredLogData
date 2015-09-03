@@ -5,6 +5,11 @@ import com.amaranth.structlog.struct.StructLog;
 
 public class StructLogEntity extends StructLog {
 
+	// Who knew serialization would fail without default CTOR. :|
+	public StructLogEntity() {
+		super("defaultComponentName");
+	}
+	
 	public StructLogEntity(String componentName) {
 		super(componentName);
 	}
@@ -13,5 +18,9 @@ public class StructLogEntity extends StructLog {
 	protected void save() {
 		StructLogDao.getInstance().save(this);
 	}
-
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
 }

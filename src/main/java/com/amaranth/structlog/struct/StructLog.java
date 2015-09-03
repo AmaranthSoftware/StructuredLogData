@@ -62,5 +62,8 @@ public abstract class StructLog extends StructLogPojo implements AutoCloseable {
 		}
 		return;
 	}
-
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

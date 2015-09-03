@@ -77,4 +77,13 @@ public abstract class StructLogPojo {
 
 	abstract protected void validate() throws IllegalStateException;
 
+	@Override
+	public String toString() {
+		return "StructLogPojo [id=" + id + ", startTimestamp=" + startTimestamp
+				+ ", endTimestamp=" + endTimestamp + ", exceptionsCaught="
+				+ exceptionsCaught + ", dependentStructLog="
+				+ dependentStructLog + ", attributes=" + attributes
+				+ ", input=" + input + ", output=" + output + "]";
+	}
+	
 }
