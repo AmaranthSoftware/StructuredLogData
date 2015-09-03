@@ -3,20 +3,18 @@ package com.amaranth.structlog.mongo.db;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
+import com.amaranth.structlog.config.AppConfig;
 import com.mongodb.MongoClient;
 
-public class MongoDB {
-	//TODO: Read following values from AppConfig
-	private final static String SERVER_URL = "127.0.0.1:27017";
+public class MongoDB { 	
 	private final static String DB_NAME = "amaranthtestdb";
-
 	private static MongoDB instance = new MongoDB();
 	public static MongoDB getInstance()
 	{
 		return MongoDB.instance;
 	}
 
-	private final MongoClient mongoClient = new MongoClient(MongoDB.SERVER_URL);
+	private final MongoClient mongoClient = new MongoClient(AppConfig.getMongoDBUrl());
 	private final Morphia morphia = new Morphia();
 	private final Datastore ds = morphia.createDatastore(mongoClient, MongoDB.DB_NAME);
 
@@ -27,4 +25,8 @@ public class MongoDB {
 
 	private MongoDB() {
 	}
+	public void close() 
+	{
+		mongoClient.close();
+	} 
 }

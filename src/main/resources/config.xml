@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- const.xml -->
+<config>
+    <databases>
+        <mongodb>
+            <url>127.0.0.1:27017</url>
+        </mongodb>
+    </databases>
+</config>
