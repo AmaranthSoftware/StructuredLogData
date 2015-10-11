@@ -25,7 +25,7 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave1() {
 		String id = null;
-		try (StructLog slog = new StructLogEntity(componentName)) {
+		try (StructLog slog = StructLogEntity.getRootStructLog(componentName)) {
 			id = slog.getId();
 		}
 
@@ -43,7 +43,7 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave2() {
 		String id = null;
-		final StructLog slog = new StructLogEntity(componentName);
+		final StructLog slog = StructLogEntity.getRootStructLog(componentName);
 		id = slog.getId();
 		slog.close();
 		final StructLog result = StructLogDao.getInstance().findOne("_id", id);

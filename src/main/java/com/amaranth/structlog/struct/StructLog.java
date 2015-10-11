@@ -15,14 +15,14 @@ public abstract class StructLog extends StructLogPojo implements AutoCloseable {
 	private static final String IS_ROOT = "IS_ROOT";
 	private static final String COMPONENT_NAME = "COMPONENT_NAME";
 
-	protected StructLog(String componentName)
-	{
-		getAttributes().put(StructLog.IS_ROOT, "true");
+	protected StructLog(String componentName, final boolean isRoot) {
+		getAttributes().put(StructLog.IS_ROOT, String.valueOf(isRoot));
 		getAttributes().put(StructLog.COMPONENT_NAME, componentName);
 	}
 
 	public boolean isRoot() {
-		return getAttributes().containsKey(StructLog.IS_ROOT) && getAttributes().get(StructLog.IS_ROOT).equals("true");
+		return getAttributes().containsKey(StructLog.IS_ROOT)
+				&& getAttributes().get(StructLog.IS_ROOT).equals("true");
 	}
 
 	public String getComponentName() {
@@ -47,21 +47,22 @@ public abstract class StructLog extends StructLogPojo implements AutoCloseable {
 	@Override
 	protected void validate() throws IllegalStateException {
 		Validator validator;
-		final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		final ValidatorFactory factory = Validation
+				.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
-		final Set<ConstraintViolation<StructLog>> validationResponse = validator.validate(this);
+		final Set<ConstraintViolation<StructLog>> validationResponse = validator
+				.validate(this);
 		final StringBuilder sb = new StringBuilder();
-		for (final ConstraintViolation<StructLog> constraintViolation : validationResponse)
-		{
+		for (final ConstraintViolation<StructLog> constraintViolation : validationResponse) {
 			sb.append(constraintViolation.toString());
 		}
 		final String message = sb.toString();
-		if (!StringUtils.isEmpty(message))
-		{
+		if (!StringUtils.isEmpty(message)) {
 			throw new IllegalStateException(message);
 		}
 		return;
 	}
+
 	@Override
 	public String toString() {
 		return super.toString();
