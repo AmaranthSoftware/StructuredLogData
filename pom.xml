@@ -6,39 +6,39 @@
 		package name will be 'com.amaranth' for sake of brievity. -->
 	<groupId>com.github.amaranthsoftware</groupId>
 	<artifactId>structlog</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
-	
+
 	<name>structlog</name>
 	<url>https://github.com/AmaranthSoftware/StructuredLogData</url>
 
 	<licenses>
 		<license>
-		  <name>The Apache License, Version 2.0</name>
-		  <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
-	  </licenses>
-	  <developers>
+	</licenses>
+	<developers>
 		<developer>
-		  <name>Ajeet Ganga</name>
-		  <email>ajeetgangacs@gmail.com</email>
-		  <organization>AmaranthSoftware</organization>
-		  <organizationUrl>https://github.com/AmaranthSoftware</organizationUrl>
+			<name>Ajeet Ganga</name>
+			<email>ajeetgangacs@gmail.com</email>
+			<organization>AmaranthSoftware</organization>
+			<organizationUrl>https://github.com/AmaranthSoftware</organizationUrl>
 		</developer>
-	  </developers>
-	  <scm>
+	</developers>
+	<scm>
 		<connection>scm:git:git@github.com:AmaranthSoftware/StructuredLogData.git</connection>
 		<developerConnection>scm:git:git@github.com:AmaranthSoftware/StructuredLogData.git</developerConnection>
 		<url>git@github.com:AmaranthSoftware/StructuredLogData.git</url>
-	  </scm>
+	</scm>
 
-	  
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>commons-configuration</groupId>
@@ -97,10 +97,10 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	
+
 	<build>
 		<plugins>
-		
+
 			<!-- Nexus Staging Maven Plugin for Deployment and Release -->
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
@@ -112,7 +112,7 @@
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
-			</plugin> 
+			</plugin>
 
 			<!-- OSS build-source-code upload plug-in -->
 			<plugin>
@@ -143,6 +143,23 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- For signing the build with PGP. From: http://maven.apache.org/plugins/maven-gpg-plugin/usage.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
