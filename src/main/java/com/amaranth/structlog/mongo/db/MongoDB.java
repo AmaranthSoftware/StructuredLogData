@@ -8,7 +8,7 @@ import com.mongodb.MongoClient;
 
 public class MongoDB {
 	private final static String SERVER_URL = AppConfig.getMongoDBUrl();
-	private final static String DB_NAME = "amaranthtestdb";
+	private final static String DB_NAME = AppConfig.getMongoDBName();
 
 	private static MongoDB instance = new MongoDB();
 
