@@ -9,9 +9,9 @@ import com.mongodb.MongoClient;
 public class MongoDB {
 	private final String serverUrl;
 	private final String dbName;
-	private MongoClient mongoClient;
-	private Morphia morphia;
-	private Datastore ds;
+	private final MongoClient mongoClient;
+	private final Morphia morphia;
+	private final Datastore ds;
 
 	private static MongoDB instance;
 
