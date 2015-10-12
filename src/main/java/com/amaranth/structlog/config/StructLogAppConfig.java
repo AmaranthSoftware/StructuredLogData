@@ -14,7 +14,7 @@ public class StructLogAppConfig {
 		}
 	}
 
-	public void setAppConfig(String fileName) {
+	public static void setAppConfig(String fileName) {
 		try {
 			config = new XMLConfiguration(fileName);
 		} catch (ConfigurationException e) {

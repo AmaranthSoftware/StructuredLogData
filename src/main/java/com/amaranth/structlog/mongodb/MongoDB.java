@@ -7,24 +7,30 @@ import com.amaranth.structlog.config.StructLogAppConfig;
 import com.mongodb.MongoClient;
 
 public class MongoDB {
-	private final static String SERVER_URL = StructLogAppConfig.getMongoDBUrl();
-	private final static String DB_NAME = StructLogAppConfig.getMongoDBName();
+	private final String serverUrl;
+	private final String dbName;
+	private MongoClient mongoClient;
+	private Morphia morphia;
+	private Datastore ds;
 
-	private static MongoDB instance = new MongoDB();
+	private static MongoDB instance;
 
-	public static MongoDB getInstance() {
+	public static synchronized MongoDB getInstance() {
+		if (null == instance) {
+			instance = new MongoDB();
+		}
 		return MongoDB.instance;
 	}
-
-	private final MongoClient mongoClient = new MongoClient(MongoDB.SERVER_URL);
-	private final Morphia morphia = new Morphia();
-	private final Datastore ds = morphia.createDatastore(mongoClient,
-			MongoDB.DB_NAME);
 
 	public Datastore getDatastore() {
 		return ds;
 	}
 
 	private MongoDB() {
+		serverUrl = StructLogAppConfig.getMongoDBUrl();
+		dbName = StructLogAppConfig.getMongoDBName();
+		mongoClient = new MongoClient(serverUrl);
+		morphia = new Morphia();
+		ds = morphia.createDatastore(mongoClient, dbName);
 	}
 }
