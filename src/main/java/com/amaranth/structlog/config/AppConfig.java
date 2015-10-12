@@ -21,4 +21,8 @@ public class AppConfig {
 	public static String getMongoDBName() {
 		return config.getString("databases.mongodb.name");
 	}
+
+	public static String getDatabaseToUse() {
+		return config.getString("databaseToUse");
+	}
 }

@@ -10,14 +10,28 @@ import javax.validation.ValidatorFactory;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-public abstract class StructLog extends StructLogPojo implements AutoCloseable {
+import com.amaranth.structlog.db.DaoFactory;
+import com.amaranth.structlog.db.IDaoSave;
+
+public class StructLog extends StructLogPojo implements AutoCloseable {
 
 	private static final String IS_ROOT = "IS_ROOT";
 	private static final String COMPONENT_NAME = "COMPONENT_NAME";
 
-	protected StructLog(String componentName, final boolean isRoot) {
+	private StructLog() {
+		getAttributes().put(StructLog.IS_ROOT, "false");
+		getAttributes().put(StructLog.COMPONENT_NAME, "defaultComponentName");
+
+	}
+
+	private StructLog(String componentName, final boolean isRoot, IDaoSave dao) {
 		getAttributes().put(StructLog.IS_ROOT, String.valueOf(isRoot));
 		getAttributes().put(StructLog.COMPONENT_NAME, componentName);
+	}
+
+	static StructLog getInstance(final String componentName,
+			final boolean isRoot, final IDaoSave dao) {
+		return new StructLog(componentName, isRoot, dao);
 	}
 
 	public boolean isRoot() {
@@ -42,7 +56,9 @@ public abstract class StructLog extends StructLogPojo implements AutoCloseable {
 	}
 
 	@Override
-	abstract protected void save();
+	protected void save() {
+		DaoFactory.getInstance().save(this);
+	}
 
 	@Override
 	protected void validate() throws IllegalStateException {

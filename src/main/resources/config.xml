@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- const.xml -->
 <config>
+	<databaseToUse>mongodb</databaseToUse>
 	<databases>
 		<mongodb>
 			<!-- <url>"10.64.220.117:27017" </url> -->

@@ -5,9 +5,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.amaranth.structlog.mongo.dao.StructLogDao;
-import com.amaranth.structlog.mongo.entity.StructLogEntity;
+import com.amaranth.structlog.mongodb.StructLogDao;
 import com.amaranth.structlog.struct.StructLog;
+import com.amaranth.structlog.struct.StructLogFactory;
 
 /**
  * Unit test TestStructLog.
@@ -25,7 +25,7 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave1() {
 		String id = null;
-		try (StructLog slog = StructLogEntity.getRootStructLog(componentName)) {
+		try (StructLog slog = StructLogFactory.getRootStructLog(componentName)) {
 			id = slog.getId();
 		}
 
@@ -33,7 +33,7 @@ public class TestStructLog {
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
 		Assert.assertEquals(result.getComponentName(), componentName);
-		StructLogDao.getInstance().delete((StructLogEntity) result);
+		StructLogDao.getInstance().delete(result);
 	}
 
 	/**
@@ -43,13 +43,13 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave2() {
 		String id = null;
-		final StructLog slog = StructLogEntity.getRootStructLog(componentName);
+		final StructLog slog = StructLogFactory.getRootStructLog(componentName);
 		id = slog.getId();
 		slog.close();
 		final StructLog result = StructLogDao.getInstance().findOne("_id", id);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
 		Assert.assertEquals(result.getComponentName(), componentName);
-		StructLogDao.getInstance().delete((StructLogEntity) result);
+		StructLogDao.getInstance().delete(result);
 	}
 }
