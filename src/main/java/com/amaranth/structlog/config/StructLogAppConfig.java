@@ -3,11 +3,20 @@ package com.amaranth.structlog.config;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
-public class AppConfig {
+public class StructLogAppConfig {
 	private static XMLConfiguration config;
 	static {
 		try {
 			config = new XMLConfiguration("config.xml");
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void setAppConfig(String fileName) {
+		try {
+			config = new XMLConfiguration(fileName);
 		} catch (ConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,12 +3,12 @@ package com.amaranth.structlog.mongodb;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
-import com.amaranth.structlog.config.AppConfig;
+import com.amaranth.structlog.config.StructLogAppConfig;
 import com.mongodb.MongoClient;
 
 public class MongoDB {
-	private final static String SERVER_URL = AppConfig.getMongoDBUrl();
-	private final static String DB_NAME = AppConfig.getMongoDBName();
+	private final static String SERVER_URL = StructLogAppConfig.getMongoDBUrl();
+	private final static String DB_NAME = StructLogAppConfig.getMongoDBName();
 
 	private static MongoDB instance = new MongoDB();
 
