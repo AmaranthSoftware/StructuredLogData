@@ -5,6 +5,8 @@ import org.apache.commons.configuration.XMLConfiguration;
 
 public class StructLogAppConfig {
 	private static XMLConfiguration config;
+	private static boolean enableStructLog;
+	
 	static {
 		try {
 			config = new XMLConfiguration("config.xml");
@@ -33,5 +35,13 @@ public class StructLogAppConfig {
 
 	public static String getDatabaseToUse() {
 		return config.getString("databaseToUse");
+	}
+
+	public static boolean isEnableStructLog() {
+		return enableStructLog;
+	}
+
+	public static void setEnableStructLog(boolean enableStructLog) {
+		StructLogAppConfig.enableStructLog = enableStructLog;
 	}
 }

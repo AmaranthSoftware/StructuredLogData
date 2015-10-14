@@ -1,8 +1,9 @@
-package com.amaranth.structlog.mongodb;
+package com.amaranth.structlog.db.mongodb;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 
+import com.amaranth.structlog.config.StructLogAppConfig;
 import com.amaranth.structlog.db.IDaoSave;
 import com.amaranth.structlog.struct.StructLog;
 
@@ -26,11 +27,14 @@ public class StructLogDaoSave implements IDaoSave {
 
 	@Override
 	public void save(StructLog structLog) {
+		if (!StructLogAppConfig.isEnableStructLog()) {
+			return;
+		}
 		try {
 			dao.save(structLog);
 		} catch (Exception e) {
 			System.err.println("Failed to save structLog="
 					+ structLog.toString());
-		}
+		}		
 	}
 }

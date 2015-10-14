@@ -1,4 +1,4 @@
-package com.amaranth.structlog.mongodb;
+package com.amaranth.structlog.db.mongodb;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
