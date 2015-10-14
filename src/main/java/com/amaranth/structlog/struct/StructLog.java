@@ -24,14 +24,14 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 
 	}
 
-	private StructLog(String componentName, final boolean isRoot, IDaoSave dao) {
+	private StructLog(String componentName, final boolean isRoot) {
 		getAttributes().put(StructLog.IS_ROOT, String.valueOf(isRoot));
 		getAttributes().put(StructLog.COMPONENT_NAME, componentName);
 	}
 
 	static StructLog getInstance(final String componentName,
-			final boolean isRoot, final IDaoSave dao) {
-		return new StructLog(componentName, isRoot, dao);
+			final boolean isRoot) {
+		return new StructLog(componentName, isRoot);
 	}
 
 	public boolean isRoot() {

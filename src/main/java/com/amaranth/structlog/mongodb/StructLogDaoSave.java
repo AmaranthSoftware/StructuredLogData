@@ -26,6 +26,11 @@ public class StructLogDaoSave implements IDaoSave {
 
 	@Override
 	public void save(StructLog structLog) {
-		dao.save(structLog);
+		try {
+			dao.save(structLog);
+		} catch (Exception e) {
+			System.err.println("Failed to save structLog="
+					+ structLog.toString());
+		}
 	}
 }

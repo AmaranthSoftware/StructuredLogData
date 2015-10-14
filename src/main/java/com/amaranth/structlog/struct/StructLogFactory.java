@@ -1,15 +1,13 @@
 package com.amaranth.structlog.struct;
 
 import com.amaranth.structlog.config.StructLogAppConfig;
-import com.amaranth.structlog.mongodb.StructLogDaoSave;
 
 public class StructLogFactory {
 
 	private static StructLog getInstance(final String componentName,
 			final boolean isRoot) {
 		if (StructLogAppConfig.getDatabaseToUse().equals("mongodb")) {
-			return StructLog.getInstance(componentName, isRoot,
-					StructLogDaoSave.getInstance());
+			return StructLog.getInstance(componentName, isRoot);
 		}
 		return null;
 	}
