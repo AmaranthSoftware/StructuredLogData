@@ -8,13 +8,14 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 
 import com.amaranth.structlog.db.DaoFactory;
-import com.amaranth.structlog.db.IDaoSave;
 
 public class StructLog extends StructLogPojo implements AutoCloseable {
 
+	private final static ObjectMapper objectMapper = new ObjectMapper();
 	private static final String IS_ROOT = "IS_ROOT";
 	private static final String COMPONENT_NAME = "COMPONENT_NAME";
 
@@ -83,4 +84,39 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	public String toString() {
 		return super.toString();
 	}
+	
+	public void setInputAsObject(Object request) 
+	{
+		setInput(getSerializedObjectString(request));
+	}
+	
+	public void setOutputAsObject(Object output) 
+	{
+		setOutput(getSerializedObjectString(output));
+	}
+	
+	private static String getSerializedObjectString(Object object) {
+		if (null == object) {			
+			return null;
+		}
+		
+		String serializedObject = null;
+		try
+		{
+			serializedObject  = objectMapper.writeValueAsString(object);
+		}
+		catch (Exception e)
+		{
+			//FIXME: Log integration
+			e.printStackTrace();			
+		}
+		finally
+		{
+			if (null == serializedObject)
+			{
+				serializedObject = object.toString();
+			}
+		}
+		return null;
+	}	
 }
