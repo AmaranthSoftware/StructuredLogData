@@ -57,8 +57,10 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	}
 
 	@Override
-	protected void save() {
-		DaoFactory.getInstance().save(this);
+	protected void save() {		
+		if (getAttributes().containsKey(IS_ROOT)) {
+			DaoFactory.getInstance().save(this);			
+		}
 	}
 
 	@Override
