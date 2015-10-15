@@ -14,6 +14,10 @@ import org.joda.time.DateTime;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+import com.amaranth.structlog.struct.util.SerDeserHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 @Entity
 public abstract class StructLogPojo {
 	@Id
@@ -35,6 +39,7 @@ public abstract class StructLogPojo {
 	private String output = null;
 	private boolean isRoot = false;
 	private String name = "default";
+	private String user;
 
 	public String getInput() {
 		return input;
@@ -157,6 +162,7 @@ public abstract class StructLogPojo {
 		result = prime * result + ((output == null) ? 0 : output.hashCode());
 		result = prime * result
 				+ (int) (startTimestamp ^ (startTimestamp >>> 32));
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -210,6 +216,11 @@ public abstract class StructLogPojo {
 			return false;
 		if (startTimestamp != other.startTimestamp)
 			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
 		return true;
 	}
 
@@ -220,6 +231,11 @@ public abstract class StructLogPojo {
 				+ exceptionsCaught + ", dependentStructLog="
 				+ dependentStructLog + ", attributes=" + attributes
 				+ ", input=" + input + ", output=" + output + ", isRoot="
-				+ isRoot + ", name=" + name + "]";
-	}	
+				+ isRoot + ", name=" + name + ", user=" + user + "]";
+	}
+	
+	public String toJsonString() 
+	{
+		return SerDeserHelper.toJsonString(this, this.getClass());
+	}
 }
