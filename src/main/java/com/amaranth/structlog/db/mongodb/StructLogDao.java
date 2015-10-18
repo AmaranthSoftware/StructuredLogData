@@ -28,19 +28,24 @@ public class StructLogDao extends BasicDAO<StructLog, String> {
 	 * Find all records with matching 'name'. This list will be reverse-sorted
 	 * by startTimestamp(latest first, and oldest last). Total number of records
 	 * will be less than or equal to 'limit'
+	 * <p>
+	 * FIXME:[testcases] Add test cases for user, startTimestamp
 	 * 
 	 * @param name
+	 * @param user
+	 * @param name
+	 * @param startTimestamp
 	 * @param limit
 	 *            Limits number of record
 	 *            <ul>
 	 *            <li>for value <0 behavior is undefined. Asserted with
-	 *            IllegalArgumentException.
-	 *            <li>0 means no limit
-	 *            <li>>0 means restriction on upto 'limit' number of records.
+	 *            IllegalArgumentException. <li>0 means no limit <li>>0 means
+	 *            restriction on upto 'limit' number of records.
 	 *            </ul>
 	 * @return
 	 */
-	public List<StructLog> findByName(String name, long limit) {
+	public List<StructLog> findByNameUserAndStartTime(String name, String user,
+			Integer startTimestamp, Integer limit) {
 		if (limit < 0) {
 			throw new IllegalArgumentException("limit value should be >= 0.");
 		}
@@ -51,32 +56,22 @@ public class StructLogDao extends BasicDAO<StructLog, String> {
 		}
 
 		Datastore ds = MongoDB.getInstance().getDatastore();
-		Query<StructLog> q = ds.createQuery(StructLog.class).field("name")
-				.equal(name).order("-startTimestamp");
+		Query<StructLog> q = ds.createQuery(StructLog.class).order(
+				"-" + StructLog.COLNAME_startTimestamp);
 		if (limit >= 0) {
-			q = q.limit((int) limit);
+			q = q.limit(limit);
+		}
+		if (!StringUtils.isEmpty(user)) {
+			q = q.field(StructLog.COLNAME_user).equal(user);
+		}
+		if (!StringUtils.isEmpty(name)) {
+			q = q.field(StructLog.COLNAME_name).equal(name);
+		}
+		if (null != startTimestamp) {
+			q = q.field(StructLog.COLNAME_startTimestamp).greaterThanOrEq(
+					startTimestamp);
 		}
 
-		return q.asList();
-	}
-
-	/**
-	 * Return records which have matching 'name' and startTimestamp greater than
-	 * or equal to input startTimestamp.
-	 * <p>
-	 * FIXME: Write test cases for findByNameAndStartTimestamp
-	 */
-	public List<StructLog> findByNameAndStartTimestamp(String name,
-			int startTimestamp) {
-		List<StructLog> list = new ArrayList<>();
-
-		if (StringUtils.isEmpty(name)) {
-			return list;
-		}
-		Datastore ds = MongoDB.getInstance().getDatastore();
-		Query<StructLog> q = ds.createQuery(StructLog.class).field("name")
-				.equal(name).field("startTimestamp")
-				.greaterThanOrEq(startTimestamp);
 		return q.asList();
 	}
 }

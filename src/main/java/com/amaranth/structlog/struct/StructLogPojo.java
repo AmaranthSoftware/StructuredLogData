@@ -20,8 +20,10 @@ public abstract class StructLogPojo {
 	@Id
 	private final String id = RandomStringUtils
 			.randomAlphanumeric(StructLogPojo.ID_LENGTH);
+
 	@Min(message = "startTimeStamp is invalid.", value = 1)
 	private final long startTimestamp = (new DateTime()).getMillis();
+
 	@Min(message = "Did not call Close() on the object.", value = 1)
 	protected long endTimestamp = 0;
 
@@ -36,7 +38,19 @@ public abstract class StructLogPojo {
 	private String input = null;
 	private String output = null;
 	private boolean isRoot = false;
+	/**
+	 * Name of the component creating the log.
+	 * <p>
+	 * E.g. If ServiceCall1 is servicing a request for User1, then this variable
+	 * name could be serviceCall1.
+	 */
 	private String name = "default";
+	/**
+	 * Name of the user for whom the request is being processed.
+	 * <p>
+	 * E.g. If ServiceCall1 is servicing a request for User1, then this variable
+	 * name could be User1.
+	 */
 	private String user;
 
 	public String getInput() {

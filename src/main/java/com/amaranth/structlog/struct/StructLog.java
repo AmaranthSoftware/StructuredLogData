@@ -18,6 +18,9 @@ import com.amaranth.structlog.struct.util.SerDeserHelper;
 public class StructLog extends StructLogPojo implements AutoCloseable {
 
 	private final static ObjectMapper objectMapper = new ObjectMapper();
+	public static final String COLNAME_startTimestamp = "startTimestamp";
+	public static final String COLNAME_name = "name";
+	public static final String COLNAME_user = "user";
 
 	private StructLog() {
 	}

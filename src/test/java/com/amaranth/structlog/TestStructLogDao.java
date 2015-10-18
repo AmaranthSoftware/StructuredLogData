@@ -27,7 +27,7 @@ public class TestStructLogDao {
 		// order.
 		Collections.reverse(sList);
 
-		compareLists(sList, count, cn);
+		compareLists(sList, count, cn, null, null);
 
 		removeRecords(sList);
 	}
@@ -46,15 +46,15 @@ public class TestStructLogDao {
 		Collections.reverse(sList);
 
 		int subCount = 1;
-		compareLists(sList, subCount, cn);
+		compareLists(sList, subCount, cn, null, null);
 		subCount = 5;
-		compareLists(sList, subCount, cn);
+		compareLists(sList, subCount, cn, null, null);
 		subCount = count;
-		compareLists(sList, subCount, cn);
+		compareLists(sList, subCount, cn, null, null);
 		subCount = -1;
 		Exception e = null;
 		try {
-			compareLists(sList, -1, cn);
+			compareLists(sList, subCount, cn, null, null);
 		} catch (IllegalArgumentException ie) {
 			e = ie;
 		}
@@ -65,9 +65,9 @@ public class TestStructLogDao {
 	}
 
 	private void compareLists(List<StructLog> originalList, int subCount,
-			String cn) {
+			String cn, String user, Integer timestamp) {
 		List<StructLog> findByNameQueryResult = StructLogDao.getInstance()
-				.findByName(cn, subCount);
+				.findByNameUserAndStartTime(cn, user, timestamp, subCount);
 		if (subCount == 0) {
 			subCount = originalList.size();
 		}
@@ -96,7 +96,6 @@ public class TestStructLogDao {
 			final StructLog slog = StructLogFactory.getRootStructLog(cn);
 			slog.close();
 			sList.add(slog);
-			System.out.println(" id = " + slog.getId());
 		}
 	}
 }
