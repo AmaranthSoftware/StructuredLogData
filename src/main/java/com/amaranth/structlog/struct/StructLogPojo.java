@@ -9,26 +9,24 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.joda.time.DateTime;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.amaranth.structlog.struct.util.SerDeserHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 @Entity
 public abstract class StructLogPojo {
+	private static final int ID_LENGTH = 10;
+
 	@Id
-	private final String id = RandomStringUtils.randomAlphanumeric(StructLogPojo.ID_LENGTH);
+	private final String id = RandomStringUtils
+			.randomAlphanumeric(StructLogPojo.ID_LENGTH);
 	@Min(message = "startTimeStamp is invalid.", value = 1)
 	private final long startTimestamp = (new DateTime()).getMillis();
 	@Min(message = "Did not call Close() on the object.", value = 1)
 	protected long endTimestamp = 0;
-	
-	// We started with Throwable and then later tried Exceptions, but both of which are 
-	// not getting stored in MongoDB.
+
+	// We started with Throwable and then later tried Exceptions, but both of
+	// which are not getting stored in MongoDB.
 	@NotNull
 	private final List<String> exceptionsCaught = new ArrayList<String>();
 	@NotNull
@@ -62,51 +60,42 @@ public abstract class StructLogPojo {
 	}
 
 	/**
-	 * Use only to get the List.
-	 * To add individual Exception use addException()
+	 * Use only to get the List. To add individual Exception use addException()
+	 * 
 	 * @return
 	 */
 	public List<String> getExceptionsCaught() {
 		return exceptionsCaught;
 	}
-	
-	public void addExceptionCaught(Throwable t) {
-		// FIXME: Ability to accept Throwable serializer
-		getExceptionsCaught().add(
-				ExceptionUtils.getMessage(t) 
-				+ ExceptionUtils.getFullStackTrace(t) 
-				+ ExceptionUtils.getRootCauseMessage(t) 
-				+ ExceptionUtils.getRootCauseStackTrace(t));
-	}
-	
+
 	public void addExceptionCaught(String exceptionData) {
 		getExceptionsCaught().add(exceptionData);
 	}
 
 	/**
-	 * Use only to get the whole list.
-	 * To add individual structLog, use addDependentStructLog.
+	 * Use only to get the whole list. To add individual structLog, use
+	 * addDependentStructLog.
+	 * 
 	 * @return
 	 */
 	public List<StructLogPojo> getDependentStructLog() {
 		return dependentStructLog;
 	}
-	
+
 	public void addDependentStructLog(StructLogPojo structLogPojo) {
 		getDependentStructLog().add(structLogPojo);
 	}
 
 	/**
-	 * Use only to get the whole Map.
-	 * To add individual entry use addAttribute()
+	 * Use only to get the whole Map. To add individual entry use addAttribute()
+	 * 
 	 * @return
 	 */
 	public Map<String, String> getAttributes() {
 		return attributes;
 	}
-	
-	public void addAttribute(String key, String value)  
-	{
+
+	public void addAttribute(String key, String value) {
 		getAttributes().put(key, value);
 	}
 
@@ -117,7 +106,6 @@ public abstract class StructLogPojo {
 	public long getEndTimestamp() {
 		return endTimestamp;
 	}
-	private static final int ID_LENGTH = 10;
 
 	abstract public void close();
 
@@ -232,10 +220,5 @@ public abstract class StructLogPojo {
 				+ dependentStructLog + ", attributes=" + attributes
 				+ ", input=" + input + ", output=" + output + ", isRoot="
 				+ isRoot + ", name=" + name + ", user=" + user + "]";
-	}
-	
-	public String toJsonString() 
-	{
-		return SerDeserHelper.toJsonString(this, this.getClass());
 	}
 }

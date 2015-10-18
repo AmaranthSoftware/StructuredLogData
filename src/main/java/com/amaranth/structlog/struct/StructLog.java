@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 
 import com.amaranth.structlog.db.DaoFactory;
+import com.amaranth.structlog.struct.util.SerDeserHelper;
 
 public class StructLog extends StructLogPojo implements AutoCloseable {
 
@@ -44,9 +45,9 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	}
 
 	@Override
-	protected void save() {		
+	protected void save() {
 		if (isRoot()) {
-			DaoFactory.getInstance().save(this);			
+			DaoFactory.getInstance().save(this);
 		}
 	}
 
@@ -73,39 +74,44 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	public String toString() {
 		return super.toString();
 	}
-	
-	public void setInputAsObject(Object request) 
-	{
+
+	public void setInputAsObject(Object request) {
 		setInput(getSerializedObjectString(request));
 	}
-	
-	public void setOutputAsObject(Object output) 
-	{
+
+	public void setOutputAsObject(Object output) {
 		setOutput(getSerializedObjectString(output));
 	}
-	
+
 	private static String getSerializedObjectString(Object object) {
-		if (null == object) {			
+		if (null == object) {
 			return null;
 		}
-		
+
 		String serializedObject = null;
-		try
-		{
-			serializedObject  = objectMapper.writeValueAsString(object);
-		}
-		catch (Exception e)
-		{
-			//FIXME: Log integration
-			e.printStackTrace();			
-		}
-		finally
-		{
-			if (null == serializedObject)
-			{
+		try {
+			serializedObject = objectMapper.writeValueAsString(object);
+		} catch (Exception e) {
+			// FIXME: Log integration
+			e.printStackTrace();
+		} finally {
+			if (null == serializedObject) {
 				serializedObject = object.toString();
 			}
 		}
 		return serializedObject;
-	}	
+	}
+
+	public void addExceptionCaught(Throwable t) {
+		// FIXME: Ability to accept Throwable serializer
+		getExceptionsCaught().add(
+				ExceptionUtils.getMessage(t)
+						+ ExceptionUtils.getFullStackTrace(t)
+						+ ExceptionUtils.getRootCauseMessage(t)
+						+ ExceptionUtils.getRootCauseStackTrace(t));
+	}
+
+	public String toJsonString() {
+		return SerDeserHelper.toJsonString(this, this.getClass());
+	}
 }
