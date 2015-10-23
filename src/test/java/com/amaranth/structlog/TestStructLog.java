@@ -1,6 +1,5 @@
 package com.amaranth.structlog;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave1() {
 		StructLogAppConfig.setAppConfig(CONFIG_XML_FILE);
-		
+
 		String id = null;
 		try (StructLog slog = StructLogFactory.getRootStructLog(componentName)) {
 			id = slog.getId();
@@ -49,7 +48,7 @@ public class TestStructLog {
 	@Test
 	public void testStructLogEntitySave2() {
 		StructLogAppConfig.setAppConfig(CONFIG_XML_FILE);
-		
+
 		String id = null;
 		final StructLog slog = StructLogFactory.getRootStructLog(componentName);
 		id = slog.getId();
@@ -60,34 +59,40 @@ public class TestStructLog {
 		Assert.assertEquals(result.getName(), componentName);
 		StructLogDao.getInstance().delete(result);
 	}
+
 	@Test
-	public void testStructLogEntityDisabled() { 
+	public void testStructLogEntityDisabled() {
 		StructLogAppConfig.setAppConfig("");
-		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(), false);
+		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(),
+				false);
 		StructLogAppConfig.setAppConfig(CONFIG_XML_FILE);
-		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(), true);
+		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(),
+				true);
 		StructLogAppConfig.setAppConfig("");
-		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(), false);
+		Assert.assertEquals(StructLogAppConfig.isStructLogConfigInitialized(),
+				false);
 	}
+
 	@Test
 	public void testStoringExceptions1() {
 		StructLogAppConfig.setAppConfig(CONFIG_XML_FILE);
-		 
+
 		String id = null;
 		final StructLog slog = StructLogFactory.getRootStructLog(componentName);
 		id = slog.getId();
-		
-		Exception e=null;
+
+		Exception e = null;
 		try {
-			e.printStackTrace();
-		}
-		catch (Exception t) {
-			System.out.println(ExceptionUtils.getMessage(t) + ExceptionUtils.getFullStackTrace(t) +  ExceptionUtils.getRootCauseMessage(t) +  ExceptionUtils.getRootCauseStackTrace(t)); 
+			throw new Exception("test-exception");
+		} catch (Exception t) {
 			slog.addExceptionCaught(t);
-		}		
-		slog.close(); 
+		}
+		slog.close();
 		final StructLog result = StructLogDao.getInstance().findOne("_id", id);
+
+		Assert.assertTrue(result.getExceptionsCaught().get(0)
+				.contains("test-exception"));
+
 		StructLogDao.getInstance().delete(result);
 	}
-
 }

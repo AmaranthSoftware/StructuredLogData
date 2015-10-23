@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.amaranth.structlog.config.StructLogAppConfig;
@@ -14,6 +16,17 @@ import com.amaranth.structlog.struct.StructLog;
 import com.amaranth.structlog.struct.StructLogFactory;
 
 public class TestStructLogDao {
+
+	@Before
+	public void setup() {
+		StructLogAppConfig.setAppConfig("config.xml");
+	}
+
+	@After
+	public void teardown() {
+		StructLogAppConfig.setAppConfig("");
+	}
+
 	@Test
 	public void testQueryFindByName_fullList() {
 
