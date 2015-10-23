@@ -9,14 +9,12 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 
 import com.amaranth.structlog.db.DaoFactory;
+import com.amaranth.structlog.struct.util.SerDeserHelper;
 
 public class StructLog extends StructLogPojo implements AutoCloseable {
-
-	private final static ObjectMapper objectMapper = new ObjectMapper();
 	public static final String COLNAME_startTimestamp = "startTimestamp";
 	public static final String COLNAME_name = "name";
 	public static final String COLNAME_user = "user";
@@ -78,31 +76,12 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	}
 
 	public void setInputAsObject(Object request) {
-		setInput(getSerializedObjectString(request));
+		setInput(SerDeserHelper.toJsonString(request, request.getClass()));
 	}
 
 	public void setOutputAsObject(Object output) {
-		setOutput(getSerializedObjectString(output));
-	}
-
-	private static String getSerializedObjectString(Object object) {
-		if (null == object) {
-			return null;
-		}
-
-		String serializedObject = null;
-		try {
-			serializedObject = objectMapper.writeValueAsString(object);
-		} catch (Exception e) {
-			// FIXME: Log integration
-			e.printStackTrace();
-		} finally {
-			if (null == serializedObject) {
-				serializedObject = object.toString();
-			}
-		}
-		return serializedObject;
-	}
+		setOutput(SerDeserHelper.toJsonString(output, output.getClass()));
+	} 
 
 	public void addExceptionCaught(Throwable t) {
 		String rootCauseStackTrace = null;

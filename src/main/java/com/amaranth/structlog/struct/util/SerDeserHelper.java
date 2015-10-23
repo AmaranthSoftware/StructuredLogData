@@ -1,20 +1,39 @@
 package com.amaranth.structlog.struct.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class SerDeserHelper {
-
-	// FIXME: Replace with jackson object mapper.
-	private static final Gson gson = new GsonBuilder().create();
-	
-	public static <T> T getObjectFromJsonString(String jsonString, Class<T> classOfT) 
-	{
-		return  classOfT.cast(gson.fromJson(jsonString, classOfT));
+	private final static ObjectMapper objectMapper = new ObjectMapper();
+	public static <T> T getObjectFromJsonString(String jsonString,
+			Class<T> classOfT) {
+		try {
+			return classOfT.cast(objectMapper.readValue(jsonString, classOfT));
+		} catch (Exception e) {
+			// FIXME: integrate logger
+						e.printStackTrace();
+						System.err.println("Couldn't serialize " + classOfT.getName());
+		}
+		return null;
 	}
-	
-	public static <T> String toJsonString(Object o, Class<T> classOfT) 
-	{
-		return gson.toJson(o, classOfT);
+
+	public static <T> String toJsonString(Object dataObject, Class<T> classOfT) {
+		String serializedObject = null;
+		if (null == dataObject) {
+			return serializedObject;
+		}
+
+		try {
+			serializedObject = objectMapper.writeValueAsString(dataObject);
+		} catch (Exception e) {
+			// FIXME: integrate logger
+			e.printStackTrace();
+			System.err.println("Couldn't serialize " + classOfT.getName());
+		} finally {
+			if (null == serializedObject) {
+				serializedObject = dataObject.toString()
+						+ "[couldn't serialize " + classOfT.getName() + "]";
+			}
+		}
+		return serializedObject;
 	}
 }
