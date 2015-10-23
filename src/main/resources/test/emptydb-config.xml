@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- const.xml -->
+<config>
+	<databaseToUse>empty</databaseToUse>
+	<databases>
+		<mongodb>
+			<url>x.y.z.l:1111</url>
+			<name>amaranthtestdb</name>
+		</mongodb>
+	</databases>
+</config>

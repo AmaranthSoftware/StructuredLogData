@@ -9,10 +9,7 @@ public class StructLogFactory {
 
 	private static StructLog getInstance(final String componentName,
 			final boolean isRoot) {
-		if (StructLogAppConfig.getDatabaseToUse().equals("mongodb")) {
 			return StructLog.getInstance(componentName, isRoot);
-		}
-		return null;
 	}
 
 	public static StructLog getRootStructLog(String componentName) {

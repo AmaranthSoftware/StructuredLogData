@@ -27,7 +27,7 @@ public class StructLogDaoSave implements IDaoSave {
 
 	@Override
 	public void save(StructLog structLog) {
-		if (!StructLogAppConfig.isEnableStructLog()) {
+		if (!StructLogAppConfig.isStructLogConfigInitialized()) {
 			return;
 		}
 		try {

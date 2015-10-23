@@ -91,8 +91,6 @@ public class TestStructLogDao {
 
 	private void insertRecords(List<StructLog> sList, String cn, int count) {
 		for (int i = 0; i < count; i++) {
-			StructLogAppConfig.setEnableStructLog(true);
-
 			final StructLog slog = StructLogFactory.getRootStructLog(cn);
 			slog.close();
 			sList.add(slog);

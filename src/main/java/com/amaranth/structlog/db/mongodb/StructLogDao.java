@@ -8,7 +8,6 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.Query;
 
-import com.amaranth.structlog.config.StructLogAppConfig;
 import com.amaranth.structlog.struct.StructLog;
 
 public class StructLogDao extends BasicDAO<StructLog, String> {
@@ -18,10 +17,7 @@ public class StructLogDao extends BasicDAO<StructLog, String> {
 	}
 
 	public static StructLogDao getInstance() {
-		if (StructLogAppConfig.isEnableStructLog()) {
-			return new StructLogDao(MongoDB.getInstance().getDatastore());
-		}
-		return null;
+		return new StructLogDao(MongoDB.getInstance().getDatastore());
 	}
 
 	/**

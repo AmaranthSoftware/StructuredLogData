@@ -7,14 +7,19 @@ import com.amaranth.structlog.db.mongodb.StructLogDaoSave;
 public class DaoFactory {
 	public static IDaoSave getInstance() {
 		
-		if (!StructLogAppConfig.isEnableStructLog()) {
+		if (!StructLogAppConfig.isStructLogConfigInitialized()) {
 			return EmptyStructLogDaoSave.getInstance();
 		}
 		
 		if (StructLogAppConfig.getDatabaseToUse().equals("mongodb")) {
 			return StructLogDaoSave.getInstance();
 		}
-		StructLogAppConfig.setEnableStructLog(false);
+		if (StructLogAppConfig.getDatabaseToUse().equals("empty")) {
+			return EmptyStructLogDaoSave.getInstance();
+		}
+		
+		// If no DB is mentioned that disable StructLogAppConfig.
+		StructLogAppConfig.setAppConfig("");
 		return null;
 	}
 }
