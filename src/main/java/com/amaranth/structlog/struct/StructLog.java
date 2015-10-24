@@ -13,7 +13,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 
 import com.amaranth.structlog.db.DaoFactory;
-import com.amaranth.structlog.struct.util.SerDeserHelper;
 
 public class StructLog extends StructLogPojo implements AutoCloseable {
 
@@ -106,15 +105,30 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	}
 
 	public void addExceptionCaught(Throwable t) {
+		String rootCauseStackTrace = null;
+
+		rootCauseStackTrace = getCauseStackTrace(t);
+
 		// FIXME: Ability to accept Throwable serializer
 		getExceptionsCaught().add(
 				ExceptionUtils.getMessage(t)
 						+ ExceptionUtils.getFullStackTrace(t)
 						+ ExceptionUtils.getRootCauseMessage(t)
-						+ ExceptionUtils.getRootCauseStackTrace(t));
+						+ rootCauseStackTrace);
 	}
 
-	public String toJsonString() {
-		return SerDeserHelper.toJsonString(this, this.getClass());
+	private String getCauseStackTrace(Throwable t) {
+		if (null == t) {
+			return null;
+		}
+
+		String rootCauseStackTrace;
+		StringBuilder sb = new StringBuilder();
+		// ExceptionUtils.getRootCauseStackTrace(t)
+		for (String causeLine : ExceptionUtils.getRootCauseStackTrace(t)) {
+			sb.append(causeLine);
+		}
+		rootCauseStackTrace = sb.toString();
+		return rootCauseStackTrace;
 	}
 }
