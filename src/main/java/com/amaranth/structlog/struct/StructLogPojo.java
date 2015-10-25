@@ -44,14 +44,14 @@ public abstract class StructLogPojo {
 	 * E.g. If ServiceCall1 is servicing a request for User1, then this variable
 	 * name could be serviceCall1.
 	 */
-	private String name = "default";
+	private String componentName = "default";
 	/**
 	 * Name of the user for whom the request is being processed.
 	 * <p>
 	 * E.g. If ServiceCall1 is servicing a request for User1, then this variable
 	 * name could be User1.
 	 */
-	private String user;
+	private String userId;
 
 	public String getInput() {
 		return input;
@@ -135,20 +135,20 @@ public abstract class StructLogPojo {
 		this.isRoot = isRoot;
 	}
 
-	public String getName() {
-		return name;
+	public String getComponentName() {
+		return componentName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setComponentName(String name) {
+		this.componentName = name;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserId(String user) {
+		this.userId = user;
 	}
 
 	@Override
@@ -168,11 +168,11 @@ public abstract class StructLogPojo {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((input == null) ? 0 : input.hashCode());
 		result = prime * result + (isRoot ? 1231 : 1237);
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((componentName == null) ? 0 : componentName.hashCode());
 		result = prime * result + ((output == null) ? 0 : output.hashCode());
 		result = prime * result
 				+ (int) (startTimestamp ^ (startTimestamp >>> 32));
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -214,10 +214,10 @@ public abstract class StructLogPojo {
 			return false;
 		if (isRoot != other.isRoot)
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (componentName == null) {
+			if (other.componentName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!componentName.equals(other.componentName))
 			return false;
 		if (output == null) {
 			if (other.output != null)
@@ -226,10 +226,10 @@ public abstract class StructLogPojo {
 			return false;
 		if (startTimestamp != other.startTimestamp)
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (userId == null) {
+			if (other.userId != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}
@@ -241,6 +241,6 @@ public abstract class StructLogPojo {
 				+ exceptionsCaught + ", dependentStructLog="
 				+ dependentStructLog + ", attributes=" + attributes
 				+ ", input=" + input + ", output=" + output + ", isRoot="
-				+ isRoot + ", name=" + name + ", user=" + user + "]";
+				+ isRoot + ", name=" + componentName + ", user=" + userId + "]";
 	}
 }

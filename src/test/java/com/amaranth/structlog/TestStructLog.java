@@ -37,7 +37,7 @@ public class TestStructLog {
 		final StructLog result = StructLogDao.getInstance().findOne("_id", id);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
-		Assert.assertEquals(result.getName(), componentName);
+		Assert.assertEquals(result.getComponentName(), componentName);
 		StructLogDao.getInstance().delete(result);
 	}
 
@@ -56,7 +56,7 @@ public class TestStructLog {
 		final StructLog result = StructLogDao.getInstance().findOne("_id", id);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(result.getId(), id);
-		Assert.assertEquals(result.getName(), componentName);
+		Assert.assertEquals(result.getComponentName(), componentName);
 		StructLogDao.getInstance().delete(result);
 	}
 

@@ -24,7 +24,7 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 
 	private StructLog(String componentName, final boolean isRoot) {
 		setRoot(isRoot);
-		setName(componentName);
+		setComponentName(componentName);
 	}
 
 	static StructLog getInstance(final String componentName,
