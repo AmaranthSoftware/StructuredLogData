@@ -53,6 +53,43 @@ public abstract class StructLogPojo {
 	 */
 	private String userId;
 
+	public String getColo() {
+		return colo;
+	}
+
+	public void setColo(String colo) {
+		this.colo = colo;
+	}
+
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+
+	public String getServiceCallStackId() {
+		return serviceCallStackId;
+	}
+
+	public void setServiceCallStackId(String serviceCallStackId) {
+		this.serviceCallStackId = serviceCallStackId;
+	}
+
+	public String getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
+
+	private String colo;
+	private String machine;
+	private String serviceCallStackId;
+	private String siteId;
+
 	public String getInput() {
 		return input;
 	}
@@ -157,6 +194,9 @@ public abstract class StructLogPojo {
 		int result = 1;
 		result = prime * result
 				+ ((attributes == null) ? 0 : attributes.hashCode());
+		result = prime * result + ((colo == null) ? 0 : colo.hashCode());
+		result = prime * result
+				+ ((componentName == null) ? 0 : componentName.hashCode());
 		result = prime
 				* result
 				+ ((dependentStructLog == null) ? 0 : dependentStructLog
@@ -168,8 +208,13 @@ public abstract class StructLogPojo {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((input == null) ? 0 : input.hashCode());
 		result = prime * result + (isRoot ? 1231 : 1237);
-		result = prime * result + ((componentName == null) ? 0 : componentName.hashCode());
+		result = prime * result + ((machine == null) ? 0 : machine.hashCode());
 		result = prime * result + ((output == null) ? 0 : output.hashCode());
+		result = prime
+				* result
+				+ ((serviceCallStackId == null) ? 0 : serviceCallStackId
+						.hashCode());
+		result = prime * result + ((siteId == null) ? 0 : siteId.hashCode());
 		result = prime * result
 				+ (int) (startTimestamp ^ (startTimestamp >>> 32));
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
@@ -189,6 +234,16 @@ public abstract class StructLogPojo {
 			if (other.attributes != null)
 				return false;
 		} else if (!attributes.equals(other.attributes))
+			return false;
+		if (colo == null) {
+			if (other.colo != null)
+				return false;
+		} else if (!colo.equals(other.colo))
+			return false;
+		if (componentName == null) {
+			if (other.componentName != null)
+				return false;
+		} else if (!componentName.equals(other.componentName))
 			return false;
 		if (dependentStructLog == null) {
 			if (other.dependentStructLog != null)
@@ -214,15 +269,25 @@ public abstract class StructLogPojo {
 			return false;
 		if (isRoot != other.isRoot)
 			return false;
-		if (componentName == null) {
-			if (other.componentName != null)
+		if (machine == null) {
+			if (other.machine != null)
 				return false;
-		} else if (!componentName.equals(other.componentName))
+		} else if (!machine.equals(other.machine))
 			return false;
 		if (output == null) {
 			if (other.output != null)
 				return false;
 		} else if (!output.equals(other.output))
+			return false;
+		if (serviceCallStackId == null) {
+			if (other.serviceCallStackId != null)
+				return false;
+		} else if (!serviceCallStackId.equals(other.serviceCallStackId))
+			return false;
+		if (siteId == null) {
+			if (other.siteId != null)
+				return false;
+		} else if (!siteId.equals(other.siteId))
 			return false;
 		if (startTimestamp != other.startTimestamp)
 			return false;
@@ -241,6 +306,9 @@ public abstract class StructLogPojo {
 				+ exceptionsCaught + ", dependentStructLog="
 				+ dependentStructLog + ", attributes=" + attributes
 				+ ", input=" + input + ", output=" + output + ", isRoot="
-				+ isRoot + ", name=" + componentName + ", user=" + userId + "]";
+				+ isRoot + ", componentName=" + componentName + ", userId="
+				+ userId + ", colo=" + colo + ", machine=" + machine
+				+ ", serviceCallStackId=" + serviceCallStackId + ", siteId="
+				+ siteId + "]";
 	}
 }
