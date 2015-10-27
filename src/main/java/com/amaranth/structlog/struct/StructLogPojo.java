@@ -52,6 +52,10 @@ public abstract class StructLogPojo {
 	 * name could be User1.
 	 */
 	private String userId;
+	private String colo;
+	private String machine;
+	private String serviceCallStackId;
+	private String siteId;
 
 	public String getColo() {
 		return colo;
@@ -84,11 +88,6 @@ public abstract class StructLogPojo {
 	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
-
-	private String colo;
-	private String machine;
-	private String serviceCallStackId;
-	private String siteId;
 
 	public String getInput() {
 		return input;

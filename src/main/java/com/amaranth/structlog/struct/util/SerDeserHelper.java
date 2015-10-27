@@ -1,17 +1,23 @@
 package com.amaranth.structlog.struct.util;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class SerDeserHelper {
 	private final static ObjectMapper objectMapper = new ObjectMapper();
+	static {
+		objectMapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);
+	}
+
 	public static <T> T getObjectFromJsonString(String jsonString,
 			Class<T> classOfT) {
 		try {
 			return classOfT.cast(objectMapper.readValue(jsonString, classOfT));
 		} catch (Exception e) {
 			// FIXME: integrate logger
-						e.printStackTrace();
-						System.err.println("Couldn't serialize " + classOfT.getName());
+			e.printStackTrace();
+			System.err.println("Couldn't serialize " + classOfT.getName());
 		}
 		return null;
 	}
