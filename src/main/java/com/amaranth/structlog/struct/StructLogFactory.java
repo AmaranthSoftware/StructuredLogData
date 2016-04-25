@@ -1,9 +1,6 @@
 package com.amaranth.structlog.struct;
 
-import com.amaranth.structlog.config.StructLogAppConfig;
 import com.amaranth.structlog.struct.util.SerDeserHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class StructLogFactory {
 
