@@ -80,8 +80,6 @@ public class TestStructLog {
 		String id = null;
 		final StructLog slog = StructLogFactory.getRootStructLog(componentName);
 		id = slog.getId();
-
-		Exception e = null;
 		try {
 			throw new Exception("test-exception");
 		} catch (Exception t) {
