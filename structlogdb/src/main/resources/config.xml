@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- const.xml -->
+<config>
+	<databaseToUse>mongodb</databaseToUse>
+	<databases>
+		<mongodb>
+			<!-- <url>"10.64.220.117:27017" </url> -->
+			<url>127.0.0.1:27017</url>
+			<name>amaranthtestdb</name>
+		</mongodb>
+	</databases>
+</config>
