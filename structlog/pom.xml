@@ -6,7 +6,7 @@
 		package name will be 'com.amaranth' for sake of brievity. -->
 	<groupId>com.github.amaranthsoftware</groupId>
 	<artifactId>structlog</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.6-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<parent>
