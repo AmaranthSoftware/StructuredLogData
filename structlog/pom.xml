@@ -5,45 +5,22 @@
 	<!-- Even though the group-id here is 'com.github.amaranthsoftware' the 
 		package name will be 'com.amaranth' for sake of brievity. -->
 	<groupId>com.github.amaranthsoftware</groupId>
-	<artifactId>structlogparent</artifactId>
-	<version>0.0.1</version>
-	<packaging>pom</packaging>
+	<artifactId>structlog</artifactId>
+	<version>0.0.6</version>
+	<packaging>jar</packaging>
 
-	<modules>
-    	<module>structlog</module>
-  	</modules>
+	<parent>
+		<groupId>com.github.amaranthsoftware</groupId>
+		<artifactId>structlogparent</artifactId>
+		<version>0.0.1</version>
+	</parent>
 
-	<name>structlogparent</name>
+	<name>structlog</name>
 	<url>https://github.com/AmaranthSoftware/StructuredLogData</url>
 	<description>Structured Log Data : For if you can't run a query on your log data, under 30 seconds, it is useless.</description>
 
-	<licenses>
-		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-	<developers>
-		<developer>
-			<name>Ajeet Ganga</name>
-			<email>ajeetgangacs@gmail.com</email>
-			<organization>AmaranthSoftware</organization>
-			<organizationUrl>https://github.com/AmaranthSoftware</organizationUrl>
-		</developer>
-	</developers>
-	<scm>
-		<connection>scm:git:git@github.com:AmaranthSoftware/StructuredLogData.git</connection>
-		<developerConnection>scm:git:git@github.com:AmaranthSoftware/StructuredLogData.git</developerConnection>
-		<url>git@github.com:AmaranthSoftware/StructuredLogData.git</url>
-	</scm>
-
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-        <additionalparam>-Xdoclint:none</additionalparam>
-	</properties> 
+	<dependencies> 
+	</dependencies>
 
 	<repositories>
 		<repository>
@@ -63,60 +40,6 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-
-	<dependencies>
-	 	<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-cassandra</artifactId>
-			<version>1.4.1.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>1.8</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mongodb.morphia</groupId>
-			<artifactId>morphia</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.10</version>
-		</dependency>
-	</dependencies>
 
 	<build>
 
@@ -384,6 +307,24 @@
 			</plugin>
 
 		</plugins>
-	</build> 
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.5.2</version>
+				<configuration>
+					<!-- Enables analysis which takes more memory but finds more bugs. If 
+						you run out of memory, changes the value of the effort element to 'low'. -->
+					<effort>Max</effort>
+					<!-- Reports all bugs (other values are medium and max) -->
+					<threshold>Low</threshold>
+					<!-- Produces XML report -->
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 </project>

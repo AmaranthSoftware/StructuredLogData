@@ -11,25 +11,36 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.joda.time.DateTime;
 
-import com.amaranth.structlog.db.DaoFactory;
+import com.amaranth.structlog.db.IDaoSave;
 import com.amaranth.structlog.struct.util.SerDeserHelper;
 
 public class StructLog extends StructLogPojo implements AutoCloseable {
 	public static final String COLNAME_startTimestamp = "startTimestamp";
 	public static final String COLNAME_name = "componentName";
 	public static final String COLNAME_user = "userId";
+	
+	private IDaoSave daoSave = null;
 
 	private StructLog() {
 	}
 
-	private StructLog(String componentName, final boolean isRoot) {
+	public IDaoSave getDaoSave() {
+		return daoSave;
+	}
+
+	public void setDaoSave(IDaoSave daoSave) {
+		this.daoSave = daoSave;
+	}
+
+	private StructLog(String componentName, final boolean isRoot, final IDaoSave daoSaveParam) {
 		setRoot(isRoot);
 		setComponentName(componentName);
+		setDaoSave(daoSaveParam);
 	}
 
 	static StructLog getInstance(final String componentName,
-			final boolean isRoot) {
-		return new StructLog(componentName, isRoot);
+			final boolean isRoot, final IDaoSave daoSaveParam) {
+		return new StructLog(componentName, isRoot, daoSaveParam);
 	}
 
 	@Override
@@ -47,7 +58,7 @@ public class StructLog extends StructLogPojo implements AutoCloseable {
 	@Override
 	protected void save() {
 		if (isRoot()) {
-			DaoFactory.getInstance().save(this);
+			daoSave.save(this);
 		}
 	}
 
