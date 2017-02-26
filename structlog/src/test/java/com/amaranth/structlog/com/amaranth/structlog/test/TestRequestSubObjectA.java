@@ -1,11 +1,8 @@
-package structlog;
-
+package com.amaranth.structlog.test;
 
 import java.util.Date;
 
-class TestRequest {
-	
-	
+public class TestRequestSubObjectA {
 	String s;
 	int i;
 	Date d;
@@ -15,11 +12,11 @@ class TestRequest {
 	static private int y = 789;
 	
 
-	public TestRequest() {
+	public TestRequestSubObjectA() {
 
 	}
 
-	public TestRequest(String s, int i, Date d) {
+	public TestRequestSubObjectA(String s, int i, Date d) {
 		this.s = s;
 		this.d = d;
 		this.i = i;

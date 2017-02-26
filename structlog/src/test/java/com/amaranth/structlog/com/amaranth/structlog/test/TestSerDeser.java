@@ -1,4 +1,4 @@
-package structlog;
+package com.amaranth.structlog.test;
 
 import java.io.IOException;
 import java.util.Date;
@@ -26,6 +26,8 @@ public class TestSerDeser {
 			sl.setInputAsObject(tr);
 			String input = sl.getInput();
 			System.out.println(input);
+			System.out.println(SerDeserHelper.toJsonString(sl, TestRequest.class));
+			
 			TestRequest tr1 = SerDeserHelper.getObjectFromJsonString(input, TestRequest.class);
 			String tr1Json = SerDeserHelper.toJsonString(tr1, TestRequest.class);
 			Assert.assertTrue(tr1Json.equals(trJson));
